@@ -15,6 +15,7 @@ module Solargraph
     autoload :SourceChainer, 'solargraph/source/source_chainer'
 
     include EncodingFixes
+    include Logging
 
     # @return [String]
     attr_reader :filename
@@ -186,7 +187,10 @@ module Solargraph
           if synchronized?
             return true if range.include?(position) || range.ending == position
           else
-            return true if last_updater && last_updater.changes.one? && range.contain?(last_updater.changes.first.range.start)
+            STDERR.puts "BAD_SPOT"
+            STDERR.puts last_updater.inspect
+            return true if last_updater && last_updater.changes.one? && last_updater.changes.respond_to?(:range) &&
+              range.contain?(last_updater.changes.first.range.start)
           end
         end
         false

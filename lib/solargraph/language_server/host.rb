@@ -110,10 +110,10 @@ module Solargraph
           message = Message.select(request['method']).new(self, request)
           begin
             message.process
-          rescue StandardError => e
-            logger.warn "Error processing request: [#{e.class}] #{e.message}"
-            logger.warn e.backtrace.join("\n")
-            message.set_error Solargraph::LanguageServer::ErrorCodes::INTERNAL_ERROR, "[#{e.class}] #{e.message}"
+          # rescue StandardError => e
+          #   logger.warn "Error processing request: [#{e.class}] #{e.message}"
+          #   logger.warn e.backtrace.join("\n")
+          #   message.set_error Solargraph::LanguageServer::ErrorCodes::INTERNAL_ERROR, "[#{e.class}] #{e.message}"
           end
           message
         elsif request['id']
